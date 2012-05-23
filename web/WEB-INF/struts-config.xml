@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE struts-config PUBLIC
+"-//Apache Software Foundation//DTD Struts Configuration 1.3//EN"
+"http://jakarta.apache.org/struts/dtds/struts-config_1_3.dtd">
+
+
+<struts-config>
+    <form-beans>
+        <form-bean name="AdminWSDSForm" type="com.myapp.struts.AdminWSDSForm"/>
+        <form-bean name="ViewServiceOrderForm" type="com.myapp.struts.ViewServiceOrderForm"/>
+        <form-bean name="LoginForm" type="com.myapp.struts.LoginForm"/>
+        <form-bean name="RegisterForm" type="com.myapp.struts.RegisterForm" />
+
+    </form-beans>
+
+    <global-exceptions>
+
+    </global-exceptions>
+
+    <global-forwards>
+
+        <forward name="welcome"  path="/Welcome.do"/>
+        <forward name="showRegistration" path="/register.jsp"/>
+        <forward name="customerServiceOrder" path="/WEB-INF/ViewServiceOrder.jsp"/>
+        <forward name="showOrder" path="/ViewServiceOrderAction.do?operation=showOrder"/>
+        <forward name="dispOrdersForCustomer" path="AdminWSDSAction.do?operation=dispOrdersForCustomer"/>
+        <forward name="showWSDSServices" path="/ViewServiceOrderAction.do?operation=showWSDSServices"/>
+        <forward name="WSDSAdminView" path="/WEB-INF/AdminWSDSView.jsp"/>
+        <forward name="displayNewOrderForm" path="/AdminWSDSAction.do?operation=displayNewOrderForm"/>
+        <forward name="PlaceOrder" path="/AdminWSDSAction.do?operation=PlaceOrder"/>
+        <forward name="showOrdersForCustomer" path="/AdminWSDSAction.do?operation=showOrdersForCustomer"/>
+        <forward name="cancelThisOrderForCustomer" path="AdminWSDSAction.do?operation=cancelThisOrderForCustomer"/>
+        <forward name="addNewCustomer" path="AdminWSDSAction.do?operation=addNewCustomer"/>
+        <forward name="showAllWSDSServices" path="AdminWSDSAction.do?operation=showAllWSDSServices"/>
+        <forward name="displayNewCustForm" path="AdminWSDSAction.do?operation=displayNewCustForm"/>
+        <forward name="saveOrderStatus" path="AdminWSDSAction.do?operation=saveOrderStatus"/>
+        <forward name="dispCustomerOrderStatus" path="AdminWSDSAction.do?operation=dispCustomerOrderStatus"/>
+        <forward name="updateOrderStatus" path="AdminWSDSAction.do?operation=updateOrderStatus"/>
+    </global-forwards>
+
+    <action-mappings>
+        <action name="LoginForm" path="/Login" scope="request" type="com.myapp.struts.LoginAction" validate="false">
+            <forward name="failure" path= "/Login.jsp"/>
+        </action>
+        <action name="RegisterForm" path="/Register" scope="request" type="com.myapp.struts.RegisterAction" validate="false">
+            <forward name="success" path="/WEB-INF/success.jsp"/>
+            <forward name="failure" path= "/Login.jsp"/>
+        </action>
+        <action path="/ViewServiceOrderAction" scope="request" type="com.myapp.struts.ViewServiceOrderAction"
+                name="ViewServiceOrderForm" input="/WEB-INF/ViewServiceOrder.jsp" validate="false" parameter="operation">
+            <forward name="ViewServiceOrderAction.do?operation=showOrder" path="/WEB-INF/ViewServiceOrder.jsp"/>
+            <forward name="ViewServiceOrderAction.do?operation=showWSDSServices" path="/WEB-INF/ViewServiceOrder.jsp"/>
+        </action>
+        <action path="/AdminWSDSAction" scope="request" type="com.myapp.struts.AdminWSDSAction" validate="false"
+                input="/WEB-INF/AdminWSDSView.jsp" name="AdminWSDSForm" parameter="operation" >
+            <forward name="success" path="/WEB-INF/ordersuccess.jsp"/>
+            <forward name="failure" path="/WEB-INF/orderfailure.jsp"/>
+            <forward name="AdminWSDSAction.do?operation=displayNewOrderForm" path="/WEB-INF/AdminWSDSView.jsp"/>
+            <forward name="AdminWSDSAction.do?operation=PlaceOrder" path="/WEB-INF/AdminWSDSView.jsp"/>
+            <forward name="AdminWSDSAction.do?operation=dispOrdersForCustomer" path="/WEB-INF/AdminWSDSView.jsp"/>
+            <forward name="AdminWSDSAction.do?operation=showOrdersForCustomer" path="/WEB-INF/AdminWSDSView.jsp"/>
+            <forward name="AdminWSDSAction.do?operation=cancelThisOrderForCustomer" path="/WEB-INF/AdminWSDSView.jsp"/>
+            <forward name="AdminWSDSAction.do?operation=addNewCustomer" path="/WEB-INF/AdminWSDSView.jsp" />
+            <forward name="AdminWSDSAction.do?operation=showAllWSDSServices" path="/WEB-INF/AdminWSDSView.jsp" />
+            <forward name="AdminWSDSAction.do?operation=displayNewCustForm" path="/WEB-INF/AdminWSDSView.jsp"/>
+            <forward name="AdminWSDSAction.do?operation=saveOrderStatus" path="/WEB-INF/AdminWSDSView.jsp"/>
+            <forward name="AdminWSDSAction.do?operation=dispCustomerOrderStatus" path="/WEB-INF/AdminWSDSView.jsp"/>
+            <forward name="AdminWSDSAction.do?operation=updateOrderStatus" path="/WEB-INF/AdminWSDSView.jsp"/>
+        </action>
+
+        <action path="/Welcome" forward="/welcomeStruts.jsp" />
+    </action-mappings>
+
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+    <message-resources parameter="com/myapp/struts/ApplicationResource"/>
+
+    <!-- ========================= Tiles plugin ===============================-->
+    <!--
+    This plugin initialize Tiles definition factory. This later can takes some
+    parameters explained here after. The plugin first read parameters from
+    web.xml, thenoverload them with parameters defined here. All parameters
+    are optional.
+    The plugin should be declared in each struts-config file.
+    - definitions-config: (optional)
+    Specify configuration file names. There can be several comma
+    separated file names (default: ?? )
+    - moduleAware: (optional - struts1.1)
+    Specify if the Tiles definition factory is module aware. If true
+    (default), there will be one factory for each Struts module.
+    If false, there will be one common factory for all module. In this
+    later case, it is still needed to declare one plugin per module.
+    The factory will be initialized with parameters found in the first
+    initialized plugin (generally the one associated with the default
+    module).
+    true : One factory per module. (default)
+    false : one single shared factory for all modules
+    - definitions-parser-validate: (optional)
+    Specify if xml parser should validate the Tiles configuration file.
+    true : validate. DTD should be specified in file header (default)
+    false : no validation
+
+    Paths found in Tiles definitions are relative to the main context.
+    -->
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />
+        <set-property property="moduleAware" value="true" />
+    </plug-in>
+
+    <!-- ========================= Validator plugin ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property
+            property="pathnames"
+            value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+    </plug-in>
+
+</struts-config>

@@ -1,0 +1,44 @@
+/* 
+    Document   : verticalnavbox
+    Created on : Nov 9, 2010, 11:33:19 AM
+    Author     : Owner
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+ul
+{
+list-style-type:none;
+margin:0;
+padding:0;
+}
+a:link,a:visited
+{
+display:block;
+font-weight:bold;
+color:#000099;
+background-color:whitesmoke;
+width:120px;
+text-align:left;
+padding:4px;
+text-decoration:none;
+text-transform:capitalize;
+}
+a:hover,a:active
+{
+    color: #d68000;
+    background-color: transparent;
+    font-weight: bold;
+}
+h3
+{
+  color:blue;
+  text-align:center;
+  font-size:10pt;
+}
+
